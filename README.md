@@ -47,6 +47,9 @@ found 0 vulnerabilities
 |        Vuetify        | pnpm i vuetify             |
 |    Vuetify自动导入    | pnpm i vite-plugin-vuetify |
 | Material Design 图标库 | pnpm add @mdi/font -D      |
+|         aixos         | pnpm i axios               |
+|      Element Plus      | pnpm install element-plus  |
+|                        |                            |
 |                        |                            |
 
 ### 1.3 配置vite.config
@@ -146,4 +149,41 @@ sytle标签中无需引入直接使用：
   background-color: $bgColor;
 }
 </style>
+```
+
+## 2. 遇到的问题
+
+### 2.1 v-app-bar不能正常渲染
+
+```html
+<v-app-bar :elevation="2">
+  <template v-slot:prepend>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  </template>
+
+  <v-app-bar-title>Application Bar</v-app-bar-title>
+</v-app-bar>
+```
+
+直接在组件中使用上述官网实例的内容，浏览器页面没有对应的显示，控制台有如下错误：
+
+```shell
+Error: [Vuetify] Could not find injected layout
+    at useLayoutItem (chunk-UF5MSZ3W.js?v=3e758b40:59:22)
+    at Object.setup [as _setup] (vuetify_lib_components_VAppBar_index__mjs.js?v=3e758b40:836:9)
+    at setup (chunk-R5VCFHL5.js?v=3e758b40:515:37)
+    ...
+```
+
+原因是 Vuetify 的该组件需要在 `v-app` 组件下，在 `App.vue` 中如下配置：
+
+```html
+<template>
+  <v-app id="app">
+    <!-- 导航栏 -->
+    <TopNavBar></TopNavBar>
+    ...
+  </v-app>
+</template>
+
 ```

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.2",
+    "element-plus": "^2.7.6",
     "sass": "^1.77.6",
     "vite-plugin-vuetify": "^2.0.3",
     "vue": "^3.4.21",

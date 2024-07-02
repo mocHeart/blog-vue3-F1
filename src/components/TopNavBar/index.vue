@@ -1,35 +1,23 @@
 <template>
-  <div class="bg">
-    TopNavBar
-    <v-btn>Click</v-btn>
-    <v-btn prepend-icon="$vuetify"> Button </v-btn>
+  <v-app-bar :elevation="8">
+    <template v-slot:prepend>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    </template>
 
-    <v-icon
-      color="purple-darken-2"
-      icon="mdi-dialpad"
-      size="large"
-    ></v-icon>
+    <v-app-bar-title>Applica2222</v-app-bar-title>
 
-    <v-icon icon="mdi-home" />
+    <template v-slot:append>
+      <v-btn icon="mdi-heart"></v-btn>
 
-    <v-icon icon="mdi-account-multiple" />
+      <v-btn icon="mdi-magnify"></v-btn>
 
-    <v-icon
-      icon="mdi-eye"
-      size="large"
-    ></v-icon>
-
-
-    
-
-    
-  </div>
+      <v-btn icon="mdi-dots-vertical"></v-btn>
+    </template>
+  </v-app-bar>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
 
-<style scoped lang="scss">
-.bg {
-  background-color: $bgColor;
-}
-</style>
+</script>
+
+<style scoped lang="scss"></style>
