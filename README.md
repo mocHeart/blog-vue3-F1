@@ -49,7 +49,7 @@ found 0 vulnerabilities
 | Material Design 图标库 | pnpm add @mdi/font -D      |
 |         aixos         | pnpm i axios               |
 |      Element Plus      | pnpm install element-plus  |
-|                        |                            |
+|         pinia         | pnpm i pinia               |
 |                        |                            |
 
 ### 1.3 配置vite.config

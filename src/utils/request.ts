@@ -3,7 +3,7 @@
 //      2.请求拦截器，一般可以在请求头中携带公共的参数，如token
 //      3.响应拦截器, 可以简化服务器返回的数据，处理http网络错误
 import axios from "axios";
-
+import { ElMessage } from "element-plus";
 
 // 利用axios.create方法创建一个axios实例
 //  可以设置基础路径，超时时间
@@ -24,7 +24,6 @@ request.interceptors.request.use((config) => {
 request.interceptors.response.use(
   (response) => {
     // 响应拦截器成功的回调，一般会进行简化数据
-
     return response.data;
   },
   (error) => {
