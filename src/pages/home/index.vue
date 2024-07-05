@@ -2,7 +2,7 @@
   <div>
     HOME
     <div class="topMargin"></div>
-    <div v-for="item of 50" :key="item">
+    <div v-for="item of 80" :key="item">
       <span>{{ item }}</span>
     </div>
   </div>

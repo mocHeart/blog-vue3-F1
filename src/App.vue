@@ -2,20 +2,26 @@
   <v-app id="app">
     <!-- 导航栏 -->
     <TopNavBar></TopNavBar>
+
     <!-- 内容 -->
     <v-main>
       <v-container>
         <router-view></router-view>
       </v-container>
     </v-main>
+
     <!-- 页脚 -->
     <Footer></Footer>
+
+     <!-- 搜索模态框 -->
+     <SearchModel></SearchModel>
   </v-app>
 </template>
 
 <script setup lang="ts">
-import TopNavBar from "@/components/TopNavBar/index.vue";
-import Footer from "@/components/Footer/index.vue";
+import TopNavBar from "@/components/layout/TopNavBar/index.vue";
+import Footer from "@/components/layout/Footer/index.vue";
+import SearchModel from "@/components/model/SearchModel/index.vue";
 import { onMounted } from "vue";
 import { reqIndexInfo } from "@/api/home";
 import useHomeStore from "@/store/modules/home";

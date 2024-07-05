@@ -10,6 +10,10 @@ const useHomeStore = defineStore("Home", {
     return {
       // 首页页面数据信息
       indexInfo: {} as IndexDataResp,
+      // 用户登录状态
+      loginFlag: false as boolean,
+      // 搜索框是否显示
+      searchFlag: false as boolean,
     };
   },
   actions: {},

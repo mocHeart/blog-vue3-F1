@@ -57,18 +57,18 @@
         <!-- 娱乐 -->
         <div class="menus-item">
           <a class="menu-btn">
-            <i class="iconfont iconqita" /> 娱乐
-            <i class="iconfont iconxiangxia2 expand" />
+            <v-icon size="small" icon="mdi mdi-pinwheel" /> 娱乐
+            <v-icon icon="mdi-chevron-down" />
           </a>
           <ul class="menus-submenu">
             <li>
               <router-link to="/albums">
-                <i class="iconfont iconxiangce1" /> 相册
+                <v-icon size="small" icon="mdi-image-size-select-actual" /> 相册
               </router-link>
             </li>
             <li>
               <router-link to="/talks">
-                <i class="iconfont iconpinglun" /> 说说
+                <v-icon size="small" icon="mdi-message-processing" /> 说说
               </router-link>
             </li>
           </ul>
@@ -76,29 +76,25 @@
         <!-- 友链 -->
         <div class="menus-item">
           <router-link class="menu-btn" to="/links">
-            <i class="iconfont iconlianjie" /> 友链
+            <v-icon size="small" icon="mdi-transit-connection-variant" /> 友链
           </router-link>
         </div>
         <!-- 关于 -->
         <div class="menus-item">
           <router-link class="menu-btn" to="/about">
-            <i class="iconfont iconzhifeiji" /> 关于
+            <v-icon size="small" icon="mdi-butterfly" /> 关于
           </router-link>
         </div>
         <!-- 留言 -->
         <div class="menus-item">
           <router-link class="menu-btn" to="/message">
-            <i class="iconfont iconpinglunzu" /> 留言
+            <v-icon size="small" icon="mdi-message-text" /> 留言
           </router-link>
         </div>
         <!-- 登录 -->
         <div class="menus-item">
-          <!-- <a
-            class="menu-btn"
-            v-if="!this.$store.state.avatar"
-            @click="openLogin"
-          >
-            <i class="iconfont icondenglu" /> 登录
+          <a class="menu-btn" v-if="true" @click="openLogin">
+            <v-icon icon="mdi-account" /> 登录
           </a>
           <template v-else>
             <img
@@ -114,10 +110,10 @@
                 </router-link>
               </li>
               <li>
-                <a @click="logout"><i class="iconfont icontuichu" /> 退出</a>
+                <!-- <a @click="logout"><i class="iconfont icontuichu" /> 退出</a> -->
               </li>
             </ul>
-          </template> -->11111
+          </template>
         </div>
       </div>
     </div>
@@ -150,6 +146,11 @@ const scroll = () => {
 
 const openSearch = () => {
   console.log("Search");
+  homeStore.searchFlag = !homeStore.searchFlag;
+};
+
+const openLogin = () => {
+  alert("暂未开放");
 };
 </script>
 
@@ -223,6 +224,11 @@ const openSearch = () => {
   transition: all 0.2s;
 }
 
+.menu-btn:hover:after {
+  width: 100%;
+}
+
+// 鼠标hover触发：菜单文字下方出现逐渐变长的蓝横线
 .menus-item a:after {
   position: absolute;
   bottom: -5px;
@@ -239,6 +245,7 @@ const openSearch = () => {
   display: block;
 }
 
+// 鼠标hover触发：标题上的下拉菜单栏由下至上浮现的动画
 .menus-submenu {
   position: absolute;
   display: none;
@@ -248,6 +255,17 @@ const openSearch = () => {
   box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
   background-color: #fff;
   animation: submenu 0.3s 0.1s ease both;
+}
+
+// 该伪元素的作用是让弹出的子菜单栏前面的伸出一小部分使和菜单项重叠，
+// 这样鼠标下滑的时候不至于子菜单栏突然消失，导致选不中子菜单栏中的内容
+.menus-submenu:before {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  content: "";
 }
 
 .menus-submenu a {
@@ -264,7 +282,7 @@ const openSearch = () => {
 
 //---------------------
 :deep(.v-toolbar__content) {
-  background-color: cadetblue;
+  background-color: rgba(15, 5, 5, 0.5);
   overflow: visible;
 }
 </style>
