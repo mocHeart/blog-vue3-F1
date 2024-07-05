@@ -2,7 +2,12 @@
   <v-app id="app">
     <!-- 导航栏 -->
     <TopNavBar></TopNavBar>
-
+    <!-- 内容 -->
+    <v-main>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
     <!-- 页脚 -->
     <Footer></Footer>
   </v-app>
@@ -34,4 +39,12 @@ const getIndexInfo = async () => {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.topMargin {
+  margin-top: 60px;
+}
+
+:deep(.v-container) {
+  background-color: #cecece;
+}
+</style>

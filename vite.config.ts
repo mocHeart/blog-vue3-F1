@@ -5,6 +5,9 @@ import vuetify from "vite-plugin-vuetify";
 // 引入node提供内置模块path：可以获取绝对路径
 import path from "path";
 
+// 快捷配置组件名称
+import VitePluginExtend from "vite-plugin-vue-setup-extend"
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -12,6 +15,7 @@ export default defineConfig({
     vuetify({
       autoImport: { labs: true },
     }),
+    VitePluginExtend(),
   ],
   // src文件夹别名配置
   resolve: {

@@ -48,6 +48,9 @@ importers:
       vite:
         specifier: ^5.2.0
         version: 5.3.1(@types/node@20.14.6)(sass@1.77.6)
+      vite-plugin-vue-setup-extend:
+        specifier: ^0.4.0
+        version: 0.4.0(vite@5.3.1(@types/node@20.14.6)(sass@1.77.6))
       vue-tsc:
         specifier: ^2.0.6
         version: 2.0.21(typescript@5.4.5)
@@ -553,6 +556,9 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
+  magic-string@0.25.9:
+    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
 
@@ -641,6 +647,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
+  sourcemap-codec@1.4.8:
+    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
+
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
@@ -660,6 +670,11 @@ packages:
   upath@2.0.1:
     resolution: {integrity: sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w==}
     engines: {node: '>=4'}
+
+  vite-plugin-vue-setup-extend@0.4.0:
+    resolution: {integrity: sha512-WMbjPCui75fboFoUTHhdbXzu4Y/bJMv5N9QT9a7do3wNMNHHqrk+Tn2jrSJU0LS5fGl/EG+FEDBYVUeWIkDqXQ==}
+    peerDependencies:
+      vite: '>=2.0.0'
 
   vite-plugin-vuetify@2.0.3:
     resolution: {integrity: sha512-HbYajgGgb/noaVKNRhnnXIiQZrNXfNIeanUGAwXgOxL6h/KULS40Uf51Kyz8hNmdegF+DwjgXXI/8J1PNS83xw==}
@@ -1191,6 +1206,10 @@ snapshots:
 
   lodash@4.17.21: {}
 
+  magic-string@0.25.9:
+    dependencies:
+      sourcemap-codec: 1.4.8
+
   magic-string@0.30.10:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -1275,6 +1294,8 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  sourcemap-codec@1.4.8: {}
+
   to-fast-properties@2.0.0: {}
 
   to-regex-range@5.0.1:
@@ -1286,6 +1307,12 @@ snapshots:
   undici-types@5.26.5: {}
 
   upath@2.0.1: {}
+
+  vite-plugin-vue-setup-extend@0.4.0(vite@5.3.1(@types/node@20.14.6)(sass@1.77.6)):
+    dependencies:
+      '@vue/compiler-sfc': 3.4.29
+      magic-string: 0.25.9
+      vite: 5.3.1(@types/node@20.14.6)(sass@1.77.6)
 
   vite-plugin-vuetify@2.0.3(vite@5.3.1(@types/node@20.14.6)(sass@1.77.6))(vue@3.4.29(typescript@5.4.5))(vuetify@3.6.10):
     dependencies:

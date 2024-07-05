@@ -11,14 +11,12 @@ export interface IndexResp extends Resp {
 }
 
 export interface IndexDataResp {
-  data: {
-    articleCount: number; // 文章数量
-    categoryCount: number; // 分类数量
-    tagCount: number; // 标签数量
-    viewsCount: string; // 总访问量
-    pageList: PageListResp[]; // 菜单栏信息
-    websiteConfig: WebConfigResq; // 网站配置信息
-  };
+  articleCount: number; // 文章数量
+  categoryCount: number; // 分类数量
+  tagCount: number; // 标签数量
+  viewsCount: string; // 总访问量
+  pageList: PageListResp[]; // 菜单栏信息
+  websiteConfig: WebConfigResq; // 网站配置信息
 }
 
 // 菜单栏数据
