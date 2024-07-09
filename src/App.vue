@@ -46,10 +46,6 @@ const getIndexInfo = async () => {
 </script>
 
 <style scoped lang="scss">
-.topMargin {
-  margin-top: 60px;
-}
-
 :deep(.v-container) {
   background-color: #cecece;
 }

@@ -51,6 +51,9 @@ found 0 vulnerabilities
 |      Element Plus      | pnpm install element-plus              |
 |         pinia         | pnpm i pinia                           |
 |    快捷设置组件名称    | pnpm i vite-plugin-vue-setup-extend -D |
+|     animate 动画库     | pnpm install animate.css               |
+|     打字机效果插件     | pnpm install easy-typer-js             |
+|                        |                                        |
 
 ### 1.3 配置vite.config
 
@@ -181,6 +184,27 @@ export default defineConfig({
 <script setup lang="ts" name="Home">  // 添加name属性
 ```
 
+### 1.7 动画库Animate.css的使用
+
+安装依赖：
+
+```shell
+pnpm install animate.css 
+```
+
+main.ts里面进行引用：
+
+```ts
+import "animate.css/animate.min.css";
+```
+
+然后在[animate.css官网](https://animate.style/)找到你想要的动画效果，直接如下使用：
+注意：animate__animated 这个类名是固定的，然后后面再跟上一个动画的类名
+
+```html
+<h1 class="blog-title animate__animated animate__headShake">CSS</h1>
+```
+
 ## 2. 遇到的问题
 
 ### 2.1 v-app-bar不能正常渲染
@@ -217,3 +241,10 @@ Error: [Vuetify] Could not find injected layout
 </template>
 
 ```
+
+## 3. 网络API
+
+| 名称 | 类型 | 说明                 | 接口示例                | 官网                                    |
+| ---- | ---- | -------------------- | ----------------------- | --------------------------------------- |
+| 一言 | 文字 | 分享感动你的那个句子 | https://v1.hitokoto.cn/ | https://developer.hitokoto.cn/sentence/ |
+|      |      |                      |                         |                                         |
