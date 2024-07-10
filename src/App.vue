@@ -4,17 +4,15 @@
     <TopNavBar></TopNavBar>
 
     <!-- 内容 -->
-    <v-main>
-      <v-container>
-        <router-view></router-view>
-      </v-container>
-    </v-main>
+    <div class="main">
+      <router-view></router-view>
+    </div>
 
     <!-- 页脚 -->
     <Footer></Footer>
 
-     <!-- 搜索模态框 -->
-     <SearchModel></SearchModel>
+    <!-- 搜索模态框 -->
+    <SearchModel></SearchModel>
   </v-app>
 </template>
 

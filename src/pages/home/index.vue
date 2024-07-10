@@ -76,7 +76,12 @@ onMounted(() => {
     });
 });
 
-let scrollDown = () => {};
+const scrollDown = () => {
+  window.scrollTo({
+    behavior: "smooth",
+    top: document.documentElement.clientHeight,
+  });
+};
 </script>
 
 <style scoped lang="scss">
@@ -100,7 +105,6 @@ let scrollDown = () => {};
 
 .home-banner {
   position: absolute;
-  top: -60px;
   left: 0;
   right: 0;
   height: 100vh;
@@ -125,7 +129,7 @@ let scrollDown = () => {};
     .scroll-down {
       cursor: pointer;
       position: absolute;
-      bottom: 0;
+      bottom: 15px;
       width: 100%;
       i {
         font-size: 2rem;
