@@ -10,6 +10,7 @@ export interface IndexResp extends Resp {
   data: IndexDataResp;
 }
 
+// 首页/返回的数据data
 export interface IndexDataResp {
   articleCount: number; // 文章数量
   categoryCount: number; // 分类数量
@@ -53,3 +54,9 @@ export interface WebConfigResq {
   websocketUrl: string;
   isMusicPlayer: number;
 }
+
+// 获取说说/home/talks返回的数据ts类型
+export interface HomeTalksResp extends Resp {
+  data: string[];
+}
+

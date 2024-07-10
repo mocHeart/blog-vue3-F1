@@ -23,15 +23,26 @@
 
   <!-- 主页文章 -->
   <v-row class="home-container">
-    <v-col md="9" cols="12"> 1233 </v-col>
+    <v-col md="9" cols="12">
+      <!-- 说说轮播 -->
+      <v-card
+        class="animate__animated animate__zoomIn"
+        v-if="talkList.length > 0"
+      >
+        <Swiper :list="talkList" />
+      </v-card>
+    </v-col>
     <v-col md="3" cols="12" class="d-md-block d-none"> 2222 </v-col>
   </v-row>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Home">
 import useHomeStore from "@/store/modules/home";
-import { computed, onMounted, reactive } from "vue";
+import { computed, onMounted, reactive, ref, Ref } from "vue";
 import EasyTyper from "easy-typer-js";
+import { reqTalksData } from "@/api/home";
+import { HomeTalksResp } from "@/api/home/type";
+import Swiper from "@/components/widget/Swiper/index.vue";
 
 let homeStore = useHomeStore();
 let cover = computed(() => {
@@ -54,6 +65,7 @@ let obj = reactive({
   backSpeed: 0, // 回滚速度
   sentencePause: false, // 整个生命周期运行完毕后，句子是否暂停显示（仅在回滚模式下生效）
 });
+let talkList: Ref<string[]> = ref([]);
 
 onMounted(() => {
   // 网站标题
@@ -64,17 +76,25 @@ onMounted(() => {
     .then((res) => {
       return res.json();
     })
-    .then(({ hitokoto, from_who }) => {
+    .then(({ hitokoto, from_who, from }) => {
       // 第一个匿名函数：完成一次output输出后的回调函数
       // 第二个匿名函数：钩子钩在每一帧将要完成的时间片段上
       new EasyTyper(
         obj,
-        hitokoto + " — " + (from_who ?? "佚名"),
+        hitokoto + " — " + (from_who ?? from ?? "佚名"),
         () => {},
         () => {}
       );
     });
+
+  // 获取说说数据
+  getTalksData();
 });
+
+const getTalksData = async () => {
+  let result: HomeTalksResp = await reqTalksData();
+  talkList.value = result.data;
+};
 
 const scrollDown = () => {
   window.scrollTo({
@@ -150,7 +170,11 @@ const scrollDown = () => {
 
 .home-container {
   max-width: 1200px;
-  margin: calc(100vh - 48px) auto 28px auto;
+  margin: calc(100vh + 20px) auto 28px auto;
   padding: 0 5px;
+}
+
+:deep(.v-card) {
+  border-radius: 8px;
 }
 </style>
