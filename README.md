@@ -53,7 +53,7 @@ found 0 vulnerabilities
 |    快捷设置组件名称    | pnpm i vite-plugin-vue-setup-extend -D |
 |     animate 动画库     | pnpm install animate.css               |
 |     打字机效果插件     | pnpm install easy-typer-js             |
-|                        |                                        |
+|       日期工具类       | pnpm install dayjs                     |
 
 ### 1.3 配置vite.config
 

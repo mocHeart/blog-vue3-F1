@@ -17,13 +17,6 @@
         >
           <span class="item" v-html="item" />
         </li>
-        <li
-          v-for="(item, index) in list"
-          :key="index + list.length"
-          :style="{ height: height + 'px' }"
-        >
-          <span class="item" v-html="item" />
-        </li>
       </ul>
     </div>
     <v-icon class="arrow" color="#4c4948" icon="mdi-chevron-double-right" />
@@ -102,6 +95,7 @@ setInterval(() => {
         white-space: nowrap;
         text-overflow: ellipsis;
         transition: all 0.3s;
+        color: #4c4948;
       }
     }
   }

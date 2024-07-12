@@ -60,3 +60,25 @@ export interface HomeTalksResp extends Resp {
   data: string[];
 }
 
+// 获取说说/home/talks返回的数据ts类型
+export interface HomeArticlesResp extends Resp {
+  data: ArticleInfo[];
+}
+
+export interface ArticleInfo {
+  id: number;
+  articleCover: string;
+  articleTitle: string;
+  articleContent: string;
+  createTime: string;
+  isTop: number;
+  type: number;
+  categoryId: number;
+  categoryName: string;
+  tagDTOList: tagDTO[];
+}
+
+export interface tagDTO {
+  id: number;
+  tagName: string;
+}

@@ -31,6 +31,67 @@
       >
         <Swiper :list="talkList" />
       </v-card>
+      <!-- 主页文章 -->
+      <v-card
+        class="article-card animate__animated animate__zoomIn"
+        style="border-radius: 12px 8px 8px 12px"
+        v-for="(item, index) of articleList"
+        :key="item.id"
+      >
+        <!-- 文章封面图 -->
+        <div :class="isRight(index)">
+          <router-link :to="'/articles/' + item.id">
+            <v-img
+              class="on-hover"
+              width="100%"
+              height="100%"
+              cover
+              :src="item.articleCover"
+            />
+          </router-link>
+        </div>
+        <!-- 文章信息 -->
+        <div class="article-wrapper">
+          <div style="line-height: 1.4">
+            <router-link :to="'/articles/' + item.id">
+              {{ item.articleTitle }}
+            </router-link>
+          </div>
+          <div class="article-info">
+            <!-- 是否置顶 -->
+            <span v-if="item.isTop == 1">
+              <span style="color: #ff7242">
+                <v-icon size="16" icon="mdi-arrow-up-bold" />置顶
+              </span>
+              <span class="separator">|</span>
+            </span>
+            <!-- 发表时间 -->
+            <v-icon size="16" icon="mdi-calendar-month-outline" />
+            {{ dayjs(item.createTime).format("YYYY-MM-DD") }}
+            <span class="separator">|</span>
+            <!-- 文章分类 -->
+            <router-link :to="'/categories/' + item.categoryId">
+              <v-icon size="16" icon="mdi-inbox-full" />
+              {{ item.categoryName }}
+            </router-link>
+            <span class="separator">|</span>
+            <!-- 文章标签 -->
+            <router-link
+              style="display: inline-block"
+              :to="'/tags/' + tag.id"
+              class="mr-1"
+              v-for="tag of item.tagDTOList"
+              :key="tag.id"
+            >
+              <v-icon size="16" icon="mdi-tag-multiple" />{{ tag.tagName }}
+            </router-link>
+          </div>
+          <!-- 文章内容 -->
+          <div class="article-content">
+            {{ item.articleContent }}
+          </div>
+        </div>
+      </v-card>
     </v-col>
     <v-col md="3" cols="12" class="d-md-block d-none"> 2222 </v-col>
   </v-row>
@@ -38,13 +99,21 @@
 
 <script setup lang="ts" name="Home">
 import useHomeStore from "@/store/modules/home";
-import { computed, onMounted, reactive, ref, Ref } from "vue";
+import {
+  computed,
+  getCurrentInstance,
+  onMounted,
+  reactive,
+  ref,
+  Ref,
+} from "vue";
 import EasyTyper from "easy-typer-js";
-import { reqTalksData } from "@/api/home";
-import { HomeTalksResp } from "@/api/home/type";
+import { reqArticles, reqTalksData } from "@/api/home";
+import { ArticleInfo, HomeArticlesResp, HomeTalksResp } from "@/api/home/type";
 import Swiper from "@/components/widget/Swiper/index.vue";
 
 let homeStore = useHomeStore();
+let dayjs = getCurrentInstance()?.appContext.config.globalProperties.$dayjs;
 let cover = computed(() => {
   var cover = "";
   homeStore.indexInfo.pageList?.forEach((item) => {
@@ -65,7 +134,6 @@ let obj = reactive({
   backSpeed: 0, // 回滚速度
   sentencePause: false, // 整个生命周期运行完毕后，句子是否暂停显示（仅在回滚模式下生效）
 });
-let talkList: Ref<string[]> = ref([]);
 
 onMounted(() => {
   // 网站标题
@@ -89,12 +157,10 @@ onMounted(() => {
 
   // 获取说说数据
   getTalksData();
-});
 
-const getTalksData = async () => {
-  let result: HomeTalksResp = await reqTalksData();
-  talkList.value = result.data;
-};
+  // 获取文章数据
+  getArticles();
+});
 
 const scrollDown = () => {
   window.scrollTo({
@@ -102,6 +168,26 @@ const scrollDown = () => {
     top: document.documentElement.clientHeight,
   });
 };
+
+let talkList: Ref<string[]> = ref([]);
+const getTalksData = async () => {
+  let result: HomeTalksResp = await reqTalksData();
+  talkList.value = result.data;
+};
+
+let articleList: Ref<ArticleInfo[]> = ref([]);
+const getArticles = async () => {
+  let result: HomeArticlesResp = await reqArticles(1);
+  articleList.value = result.data;
+};
+let isRight = computed(() => {
+  return (index: number) => {
+    if (index % 2 == 0) {
+      return "article-cover left-radius";
+    }
+    return "article-cover right-radius";
+  };
+});
 </script>
 
 <style scoped lang="scss">
@@ -172,6 +258,59 @@ const scrollDown = () => {
   max-width: 1200px;
   margin: calc(100vh + 20px) auto 28px auto;
   padding: 0 5px;
+
+  .article-card {
+    display: flex;
+    align-items: center;
+    height: 280px;
+    width: 100%;
+    margin-top: 20px;
+    &:hover .on-hover img {
+      transform: scale(1.1);
+    }
+    .article-cover {
+      overflow: hidden;
+      height: 100%;
+      width: 45%;
+    }
+    .left-radius {
+      border-radius: 8px 0 0 8px !important;
+      order: 0;
+    }
+    .right-radius {
+      border-radius: 0 8px 8px 0 !important;
+      order: 1;
+    }
+    .article-wrapper {
+      padding: 0 2.5rem;
+      width: 55%;
+      a {
+        font-size: 1.5rem;
+        transition: all 0.3s;
+        &:hover {
+          color: #8e8cd8;
+        }
+      }
+      .article-info {
+        font-size: 95%;
+        color: #858585;
+        line-height: 2;
+        margin: 0.375rem 0;
+        a {
+          font-size: 95%;
+          color: #858585 !important;
+        }
+      }
+      .article-content {
+        line-height: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
 }
 
 :deep(.v-card) {
