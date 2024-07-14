@@ -93,7 +93,61 @@
         </div>
       </v-card>
     </v-col>
-    <v-col md="3" cols="12" class="d-md-block d-none"> 2222 </v-col>
+    <v-col md="3" cols="12" class="d-md-block d-none">
+      <div class="blog-wrapper">
+        <v-card class="animated zoomIn blog-card mt-5">
+          <div class="author-wrapper">
+            <!-- 头像 -->
+            <v-avatar
+              size="110"
+              class="author-avatar"
+              :image="homeStore.indexInfo.websiteConfig.websiteAvatar"
+            >
+            </v-avatar>
+            <!-- 作者 -->
+            <div class="author">
+              {{ homeStore.indexInfo.websiteConfig.websiteAuthor }}
+            </div>
+            <!-- 座右铭 -->
+            <div class="intro">
+              {{ homeStore.indexInfo.websiteConfig.websiteIntro }}
+            </div>
+            <!-- 文章、分类和标签 -->
+            <div class="blog-info-wrapper">
+              <div class="blog-info-data">
+                <router-link to="/archives">
+                  <div style="font-size: 0.875rem">文章</div>
+                  <div style="font-size: 1.25rem">
+                    {{ homeStore.indexInfo.articleCount }}
+                  </div>
+                </router-link>
+              </div>
+              <div class="blog-info-data">
+                <router-link to="/categories">
+                  <div style="font-size: 0.875rem">分类</div>
+                  <div style="font-size: 1.25rem">
+                    {{ homeStore.indexInfo.categoryCount }}
+                  </div>
+                </router-link>
+              </div>
+              <div class="blog-info-data">
+                <router-link to="/tags">
+                  <div style="font-size: 0.875rem">标签</div>
+                  <div style="font-size: 1.25rem">
+                    {{ homeStore.indexInfo.tagCount }}
+                  </div>
+                </router-link>
+              </div>
+            </div>
+            <!-- 收藏按钮 -->
+            <a class="collection-btn" @click="tip = true">
+              <v-icon color="#fff" size="18" class="mr-1">mdi-bookmark</v-icon>
+              加入书签
+            </a>
+          </div>
+        </v-card>
+      </div>
+    </v-col>
   </v-row>
 </template>
 
@@ -188,6 +242,8 @@ let isRight = computed(() => {
     return "article-cover right-radius";
   };
 });
+
+let tip = ref(false);
 </script>
 
 <style scoped lang="scss">
@@ -207,6 +263,10 @@ let isRight = computed(() => {
     opacity: 0.4;
     filter: alpha(opacity=40);
   }
+}
+
+.separator {
+  margin: 0 6px;
 }
 
 .home-banner {
@@ -265,8 +325,11 @@ let isRight = computed(() => {
     height: 280px;
     width: 100%;
     margin-top: 20px;
-    &:hover .on-hover img {
-      transform: scale(1.1);
+    &:hover {
+      .on-hover {
+        transform: scale(1.1, 1.1);
+        transition: all 0.7s;
+      }
     }
     .article-cover {
       overflow: hidden;
@@ -308,6 +371,74 @@ let isRight = computed(() => {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+      }
+    }
+  }
+  .blog-wrapper {
+    position: sticky;
+    top: 10px;
+    .blog-card {
+      line-height: 2;
+      padding: 1.25rem 1.5rem;
+    }
+    .author-wrapper {
+      text-align: center;
+      .author-avatar {
+        transition: all 0.7s;
+        &:hover {
+          transform: rotate(360deg);
+        }
+      }
+      .author {
+        font-size: 1.375rem;
+        margin-top: 0.625rem;
+      }
+      .intro {
+        font-size: 0.875rem;
+      }
+      .blog-info-wrapper {
+        display: flex;
+        justify-self: center;
+        padding: 0.875rem 0;
+        .blog-info-data {
+          flex: 1;
+          text-align: center;
+          a {
+            text-decoration: none;
+          }
+        }
+      }
+      .collection-btn {
+        text-align: center;
+        z-index: 1;
+        font-size: 14px;
+        position: relative;
+        display: block;
+        background-color: #49b1f5;
+        color: #fff !important;
+        height: 32px;
+        line-height: 32px;
+        transition-duration: 1s;
+        transition-property: color;
+        &::before {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: -1;
+          background: #ff7242;
+          content: "";
+          transition-timing-function: ease-out;
+          transition-duration: 0.5s;
+          transition-property: transform;
+          transform: scaleX(0);
+          transform-origin: 0 50%;
+        }
+        &:hover:before {
+          transition-timing-function: cubic-bezier(0.45, 1.64, 0.47, 0.66);
+          transform: scaleX(1);
+        }
       }
     }
   }

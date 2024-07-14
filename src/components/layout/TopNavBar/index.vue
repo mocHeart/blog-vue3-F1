@@ -282,7 +282,7 @@ const openLogin = () => {
 
 //---------------------
 :deep(.v-toolbar__content) {
-  background-color: rgba(15, 5, 5, 0.5);
+  background-color: rgba(15, 5, 5, 0.2);
   overflow: visible;
 }
 </style>
