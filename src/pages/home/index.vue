@@ -21,8 +21,9 @@
     </div>
   </div>
 
-  <!-- 主页文章 -->
+  <!-- 主页主体 -->
   <v-row class="home-container">
+    <!-- 右侧无限滚动的文章 -->
     <v-col md="9" cols="12">
       <!-- 说说轮播 -->
       <v-card
@@ -93,6 +94,7 @@
         </div>
       </v-card>
     </v-col>
+    <!-- 左侧网站信息 -->
     <v-col md="3" cols="12" class="d-md-block d-none">
       <div class="blog-wrapper">
         <v-card class="animated zoomIn blog-card mt-5">
@@ -146,6 +148,33 @@
             </a>
           </div>
         </v-card>
+        <!-- 网站信息 -->
+        <v-card class="blog-card animated zoomIn mt-5 bigger">
+          <div class="web-info-title">
+            <v-icon size="18" icon="mdi-bell" />
+            公告
+          </div>
+          <div style="font-size: 0.875rem">
+            {{ homeStore.indexInfo.websiteConfig.websiteNotice }}
+          </div>
+        </v-card>
+        <!-- 网站运行咨询 -->
+        <v-card class="blog-card animated zoomIn mt-5">
+          <div class="web-info-title">
+            <v-icon size="18" icon="mdi-chart-line" />
+            网站资讯
+          </div>
+          <div class="web-info">
+            <div style="padding: 4px 0 0">
+              运行时间:<span class="float-right">{{ runTime }}</span>
+            </div>
+            <div style="padding: 4px 0 0">
+              总访问量:<span class="float-right">
+                {{ homeStore.indexInfo.viewsCount }}
+              </span>
+            </div>
+          </div>
+        </v-card>
       </div>
     </v-col>
   </v-row>
@@ -157,6 +186,7 @@ import {
   computed,
   getCurrentInstance,
   onMounted,
+  onUnmounted,
   reactive,
   ref,
   Ref,
@@ -189,6 +219,8 @@ let obj = reactive({
   sentencePause: false, // 整个生命周期运行完毕后，句子是否暂停显示（仅在回滚模式下生效）
 });
 
+let timer: NodeJS.Timer | null = null;
+
 onMounted(() => {
   // 网站标题
   document.title = homeStore.indexInfo.websiteConfig?.websiteName;
@@ -214,6 +246,16 @@ onMounted(() => {
 
   // 获取文章数据
   getArticles();
+
+  // 定时器
+  timer = setInterval(calRunTime, 1000);
+});
+
+onUnmounted(() => {
+  if (timer !== null) {
+    clearInterval(timer);
+    timer = null;
+  }
 });
 
 const scrollDown = () => {
@@ -244,6 +286,23 @@ let isRight = computed(() => {
 });
 
 let tip = ref(false);
+
+let runTime = ref("");
+
+const calRunTime = () => {
+  var timeold =
+    new Date().getTime() -
+    new Date(homeStore.indexInfo.websiteConfig.websiteCreateTime).getTime();
+  var msPerDay = 24 * 60 * 60 * 1000;
+  var daysold = Math.floor(timeold / msPerDay);
+  var str = "";
+  var day = new Date();
+  str += daysold + "天";
+  str += day.getHours() + "时";
+  str += day.getMinutes() + "分";
+  str += day.getSeconds() + "秒";
+  runTime.value = str;
+};
 </script>
 
 <style scoped lang="scss">
@@ -262,6 +321,16 @@ let tip = ref(false);
     top: 0;
     opacity: 0.4;
     filter: alpha(opacity=40);
+  }
+}
+
+@keyframes bigger {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
   }
 }
 
@@ -441,6 +510,10 @@ let tip = ref(false);
         }
       }
     }
+  }
+  .bigger i {
+    color: #f00;
+    animation: bigger 0.8s linear infinite;
   }
 }
 
