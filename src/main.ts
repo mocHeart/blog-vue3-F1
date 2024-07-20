@@ -9,8 +9,13 @@ import pinia from "@/store"; // 引入pinia仓库
 import router from "@/router";
 import "animate.css/animate.min.css";
 import dayjs from "dayjs";
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
 
 const app = createApp(App);
+
+app.component("infinite-loading", InfiniteLoading);
+
 app.use(router);
 app.use(ElementPlus, {
   locale: zhCn,

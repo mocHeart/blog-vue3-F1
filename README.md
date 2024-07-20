@@ -54,6 +54,8 @@ found 0 vulnerabilities
 |     animate 动画库     | pnpm install animate.css               |
 |     打字机效果插件     | pnpm install easy-typer-js             |
 |       日期工具类       | pnpm install dayjs                     |
+|      无限加载插件      | pnpm install v3-infinite-loading       |
+|                        |                                        |
 
 ### 1.3 配置vite.config
 

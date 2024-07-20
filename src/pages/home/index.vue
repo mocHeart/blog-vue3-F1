@@ -93,6 +93,15 @@
           </div>
         </div>
       </v-card>
+      <!-- 无限加载 -->
+      <infinite-loading class="infinite-load" @infinite="infiniteHandler">
+        <template #spinner>
+          <div>加载中...</div>
+        </template>
+        <template #complete>
+          <div>到底了！</div>
+        </template>
+      </infinite-loading>
     </v-col>
     <!-- 左侧网站信息 -->
     <v-col md="3" cols="12" class="d-md-block d-none">
@@ -178,6 +187,10 @@
       </div>
     </v-col>
   </v-row>
+  <!-- 提示消息 -->
+  <v-snackbar v-model="tip" location="top" color="#49b1f5" :timeout="2000">
+    按CTRL+D 键将本页加入书签
+  </v-snackbar>
 </template>
 
 <script setup lang="ts" name="Home">
@@ -219,7 +232,7 @@ let obj = reactive({
   sentencePause: false, // 整个生命周期运行完毕后，句子是否暂停显示（仅在回滚模式下生效）
 });
 
-let timer: NodeJS.Timer | null = null;
+let timer: number | null = null;
 
 onMounted(() => {
   // 网站标题
@@ -248,14 +261,11 @@ onMounted(() => {
   getArticles();
 
   // 定时器
-  timer = setInterval(calRunTime, 1000);
+  timer = window.setInterval(calRunTime, 1000);
 });
 
 onUnmounted(() => {
-  if (timer !== null) {
-    clearInterval(timer);
-    timer = null;
-  }
+  timer && clearInterval(timer);
 });
 
 const scrollDown = () => {
@@ -271,9 +281,10 @@ const getTalksData = async () => {
   talkList.value = result.data;
 };
 
+let currentPage = 1;
 let articleList: Ref<ArticleInfo[]> = ref([]);
 const getArticles = async () => {
-  let result: HomeArticlesResp = await reqArticles(1);
+  let result: HomeArticlesResp = await reqArticles(currentPage);
   articleList.value = result.data;
 };
 let isRight = computed(() => {
@@ -286,9 +297,7 @@ let isRight = computed(() => {
 });
 
 let tip = ref(false);
-
 let runTime = ref("");
-
 const calRunTime = () => {
   var timeold =
     new Date().getTime() -
@@ -302,6 +311,22 @@ const calRunTime = () => {
   str += day.getMinutes() + "分";
   str += day.getSeconds() + "秒";
   runTime.value = str;
+};
+
+// 无限加载回调
+const infiniteHandler = ($state: any) => {
+  currentPage++;
+  reqArticles(currentPage).then(({ data }) => {
+    console.log(data);
+    if (data && data.length > 0) {
+      data.forEach((it) => {
+        articleList.value.push(it);
+      });
+      $state.loaded(); // 通知插件我们已经拿到数据了
+    } else {
+      $state.complete(); // 通知插件所有数据都加载完了
+    }
+  });
 };
 </script>
 
@@ -514,6 +539,11 @@ const calRunTime = () => {
   .bigger i {
     color: #f00;
     animation: bigger 0.8s linear infinite;
+  }
+  .infinite-load {
+    margin-top: 5px;
+    color: #9c9c9c;
+    text-align: center;
   }
 }
 
