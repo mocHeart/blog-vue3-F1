@@ -410,7 +410,7 @@ const infiniteHandler = ($state: any) => {
 
 .home-container {
   max-width: 1200px;
-  margin: calc(100vh + 20px) auto 28px auto;
+  margin: calc(100vh + 20px) auto 0 auto;
   padding: 0 5px;
 
   .article-card {
@@ -541,7 +541,7 @@ const infiniteHandler = ($state: any) => {
     animation: bigger 0.8s linear infinite;
   }
   .infinite-load {
-    margin-top: 5px;
+    margin-top: 10px;
     color: #9c9c9c;
     text-align: center;
   }

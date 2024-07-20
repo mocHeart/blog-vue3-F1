@@ -42,5 +42,4 @@ const getIndexInfo = async () => {
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
