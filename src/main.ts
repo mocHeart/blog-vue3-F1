@@ -8,7 +8,6 @@ import vuetify from "@/plugins/vuetify";
 import pinia from "@/store"; // 引入pinia仓库
 import router from "@/router";
 import "animate.css/animate.min.css";
-import dayjs from "dayjs";
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css";
 
@@ -22,5 +21,4 @@ app.use(ElementPlus, {
 });
 app.use(vuetify);
 app.use(pinia);
-app.config.globalProperties.$dayjs = dayjs; // 全局使用dayjs
 app.mount("#app");

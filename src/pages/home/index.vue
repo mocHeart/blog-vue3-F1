@@ -68,7 +68,7 @@
             </span>
             <!-- 发表时间 -->
             <v-icon size="16" icon="mdi-calendar-month-outline" />
-            {{ dayjs(item.createTime).format("YYYY-MM-DD") }}
+            {{ getConvertDate(item.createTime) }}
             <span class="separator">|</span>
             <!-- 文章分类 -->
             <router-link :to="'/categories/' + item.categoryId">
@@ -208,9 +208,9 @@ import EasyTyper from "easy-typer-js";
 import { reqArticles, reqTalksData } from "@/api/home";
 import { ArticleInfo, HomeArticlesResp, HomeTalksResp } from "@/api/home/type";
 import Swiper from "@/components/widget/Swiper/index.vue";
+import { getConvertDate } from "@/utils/timeUtil.ts";
 
 let homeStore = useHomeStore();
-let dayjs = getCurrentInstance()?.appContext.config.globalProperties.$dayjs;
 let cover = computed(() => {
   var cover = "";
   homeStore.indexInfo.pageList?.forEach((item) => {

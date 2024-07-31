@@ -7,12 +7,23 @@ export default createRouter({
   // 管理路由
   routes: [
     {
+      path: "/",
+      redirect: "/home",
+    },
+    {
       path: "/home",
       component: () => import("@/pages/home/index.vue"),
     },
+    // {
+    //   path: "/articles/:articleId",
+    //   component: () => import("../views/article/Article.vue"], resolve)
+    // },
     {
-      path: "/",
-      redirect: "/home",
+      path: "/archives",
+      component: () => import("@/pages/archive/index.vue"),
+      meta: {
+        title: "归档"
+      }
     },
   ],
   // 滚动行为(路由跳转后滚到指定位置)

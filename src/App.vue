@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app class="appp">
     <!-- 导航栏 -->
     <TopNavBar></TopNavBar>
 
@@ -42,4 +42,9 @@ const getIndexInfo = async () => {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.main {
+  display: flex;
+  min-height: calc(100vh - 138px);
+}
+</style>

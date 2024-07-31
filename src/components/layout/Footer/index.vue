@@ -1,5 +1,5 @@
 <template>
-  <v-footer>
+  <v-footer class="footer">
     <div class="footer-wrap">
       <div>
         ©{{
@@ -15,7 +15,7 @@
   </v-footer>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Footer">
 import useHomeStore from "@/store/modules/home";
 
 let homeStore = useHomeStore();
@@ -48,5 +48,9 @@ let homeStore = useHomeStore();
   a {
     color: #eee !important;
   }
+}
+
+.v-footer {
+  padding: 0;
 }
 </style>
