@@ -197,7 +197,6 @@
 import useHomeStore from "@/store/modules/home";
 import {
   computed,
-  getCurrentInstance,
   onMounted,
   onUnmounted,
   reactive,
@@ -463,6 +462,7 @@ const infiniteHandler = ($state: any) => {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
+        line-clamp: 3;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }

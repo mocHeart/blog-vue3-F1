@@ -55,6 +55,9 @@ found 0 vulnerabilities
 |     打字机效果插件     | pnpm install easy-typer-js             |
 |       日期工具类       | pnpm install dayjs                     |
 |      无限加载插件      | pnpm install v3-infinite-loading       |
+|     Markdown解析器     | pnpm install markdown-it               |
+|    vite require支持    | pnpm i vite-plugin-require             |
+|      代码语法高亮      | pnpm install highlight.js              |
 |                        |                                        |
 
 ### 1.3 配置vite.config

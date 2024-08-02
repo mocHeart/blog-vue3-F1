@@ -14,10 +14,10 @@ export default createRouter({
       path: "/home",
       component: () => import("@/pages/home/index.vue"),
     },
-    // {
-    //   path: "/articles/:articleId",
-    //   component: () => import("../views/article/Article.vue"], resolve)
-    // },
+    {
+      path: "/articles/:articleId",
+      component: () => import("@/pages/article/index.vue"),
+    },
     {
       path: "/archives",
       component: () => import("@/pages/archive/index.vue"),
