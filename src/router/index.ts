@@ -22,8 +22,15 @@ export default createRouter({
       path: "/archives",
       component: () => import("@/pages/archive/index.vue"),
       meta: {
-        title: "归档"
-      }
+        title: "归档",
+      },
+    },
+    {
+      path: "/links",
+      component: () => import("@/pages/link/index.vue"),
+      meta: {
+        title: "友链列表",
+      },
     },
   ],
   // 滚动行为(路由跳转后滚到指定位置)
