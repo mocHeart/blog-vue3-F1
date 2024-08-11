@@ -5,12 +5,12 @@
       <h1 class="banner-title">友情链接</h1>
     </div>
 
-    <!-- 链接列表 -->
+    <!-- 正文-->
     <v-card class="blog-container">
+      <!-- 大佬链接 -->
       <div class="link-title mb-1">
         <v-icon icon="mdi-link-variant" size="24" color="blue" /> 大佬链接
       </div>
-
       <v-row class="link-container">
         <v-col
           class="link-wrapper"
@@ -30,6 +30,24 @@
           </a>
         </v-col>
       </v-row>
+
+      <!-- 添加友链 -->
+      <div class="link-title mt-4 mb-4">
+        <v-icon
+          icon="mdi-dots-horizontal-circle"
+          size="24"
+          color="blue"
+        />添加友链
+      </div>
+      <blockquote>
+        <div>名称：{{ homeStore.indexInfo.websiteConfig.websiteName }}</div>
+        <div>简介：{{ homeStore.indexInfo.websiteConfig.websiteIntro }}</div>
+        <div>头像：{{ homeStore.indexInfo.websiteConfig.websiteAvatar }}</div>
+      </blockquote>
+      <div class="mt-5 mb-5">需要交换友链的可在下方留言💖</div>
+      <blockquote class="mb-10">
+        友链信息展示需要，你的信息格式要包含：名称、介绍、链接、头像
+      </blockquote>
     </v-card>
 
     <div style="height: 1500px; background-color: pink">12345</div>
@@ -101,6 +119,9 @@ const getLinksData = async () => {
       font-weight: bold;
       line-height: 2;
       font-size: 21px;
+      :deep(.mdi-dots-horizontal-circle) {
+        margin-right: 3px;
+      }
     }
     .link-container {
       margin: 10px 10px 0;
@@ -148,6 +169,10 @@ const getLinksData = async () => {
             margin-top: 5px;
             margin-left: 10px;
             transition: all 0.5s;
+            img {
+              width: inherit;
+              height: inherit;
+            }
           }
           .link-name {
             text-align: center;
@@ -165,6 +190,15 @@ const getLinksData = async () => {
           }
         }
       }
+    }
+    blockquote {
+      line-height: 2;
+      margin: 0;
+      font-size: 15px;
+      border-left: 0.2rem solid #49b1f5;
+      padding: 10px 1rem !important;
+      background-color: #ecf7fe;
+      border-radius: 4px;
     }
   }
 }
