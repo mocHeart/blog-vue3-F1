@@ -5,7 +5,8 @@
 
     <!-- 内容 -->
     <div class="main">
-      <router-view></router-view>
+      <!-- :key="$route.fullPath" 跳转至相同路由(参数不同)时,强制刷新页面 -->
+      <router-view :key="$route.fullPath"></router-view>
     </div>
 
     <!-- 页脚 -->

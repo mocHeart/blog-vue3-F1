@@ -142,6 +142,58 @@
               </div>
             </a>
           </div>
+          <!-- 上下一篇文章 -->
+          <div class="pagination-post">
+            <!-- 上一篇 -->
+            <div class="post" v-if="lastArticle.id">
+              <router-link :to="'/articles/' + lastArticle.id">
+                <img class="post-cover" :src="lastArticle.articleCover" />
+                <div class="post-info">
+                  <div class="label">上一篇</div>
+                  <div class="post-title">
+                    {{ lastArticle.articleTitle }}
+                  </div>
+                </div>
+              </router-link>
+            </div>
+            <!-- 下一篇 -->
+            <div class="post" v-if="nextArticle.id">
+              <router-link :to="'/articles/' + nextArticle.id">
+                <img class="post-cover" :src="nextArticle.articleCover" />
+                <div class="post-info" style="text-align: right">
+                  <div class="label">下一篇</div>
+                  <div class="post-title">
+                    {{ nextArticle.articleTitle }}
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </div>
+          <!-- 推荐文章 -->
+          <div class="recommend-container" v-if="recommendArticleList.length">
+            <div class="recommend-title">
+              <v-icon icon="mdi-thumb-up" size="20" color="#4c4948" /> 相关推荐
+            </div>
+            <div class="recommend-list">
+              <div
+                class="recommend-item"
+                v-for="item of recommendArticleList"
+                :key="item.id"
+              >
+                <router-link :to="'/articles/' + item.id">
+                  <img class="recommend-cover" :src="item.articleCover" />
+                  <div class="recommend-info">
+                    <div class="recommend-date">
+                      <v-icon icon="mdi-calendar-month-outline" size="14" />
+                      {{ getConvertDate(item.createTime as string) }}
+                    </div>
+                    <div>{{ item.articleTitle }}</div>
+                  </div>
+                </router-link>
+              </div>
+            </div>
+          </div>
+
           <!-- 分割线 -->
           <hr />
         </v-card>
@@ -162,8 +214,8 @@
 <script setup lang="ts" name="Article">
 import useHomeStore from "@/store/modules/home";
 import { reqArticleDetail } from "@/api/article";
-import { ArticleResp, TagDTO } from "@/api/article/type";
-import { computed, onMounted, ref } from "vue";
+import { ArticleInfo, ArticleResp, TagDTO } from "@/api/article/type";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { getConvertDate } from "@/utils/timeUtil";
 import { md } from "@/plugins/markdown-it";
@@ -186,6 +238,9 @@ let viewsCount = ref(0);
 let commentCount = ref(0);
 let articleHref = ref(window.location.href);
 let tagDTOList = ref([] as TagDTO[]);
+let lastArticle = reactive({} as ArticleInfo);
+let nextArticle = reactive({} as ArticleInfo);
+let recommendArticleList = ref([] as ArticleInfo[]);
 onMounted(() => {
   articleId = parseInt(route.params?.articleId as string);
   getArticle();
@@ -206,6 +261,11 @@ const getArticle = async () => {
   viewsCount.value = result.data.viewsCount;
   result.data.tagDTOList.forEach((it: TagDTO) => {
     tagDTOList.value.push(it);
+  });
+  lastArticle = result.data.lastArticle;
+  nextArticle = result.data.nextArticle;
+  result.data.recommendArticleList.forEach((it: ArticleInfo) => {
+    recommendArticleList.value.push(it);
   });
 };
 
@@ -449,6 +509,112 @@ let cLick = () => {
             }
           }
         }
+      }
+      .pagination-post {
+        display: flex;
+        margin-top: 25px;
+        overflow: hidden;
+        width: 100%;
+        background: #000;
+        .post {
+          width: 100% !important;
+          position: relative;
+          height: 150px;
+          overflow: hidden;
+          &:hover {
+            .post-cover {
+              opacity: 0.8;
+              transform: scale(1.1);
+            }
+          }
+          a {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            height: 150px;
+            .post-cover {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              opacity: 0.4;
+              transition: all 0.6s;
+              object-fit: cover;
+            }
+            .post-info {
+              position: absolute;
+              top: 50%;
+              padding: 20px 40px;
+              width: 100%;
+              transform: translate(0, -50%);
+              line-height: 2;
+              font-size: 14px;
+              .label {
+                font-size: 90%;
+                color: #eee;
+              }
+              .post-title {
+                font-weight: 500;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+      .recommend-container {
+        margin-top: 25px;
+        .recommend-title {
+          font-size: 20px;
+          line-height: 2;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .recommend-list {
+          .recommend-item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin: 3px;
+            width: calc(33.333% - 6px);
+            height: 200px;
+            background: #000;
+            vertical-align: bottom;
+            &:hover {
+              .recommend-cover {
+                opacity: 0.8;
+                transform: scale(1.1);
+              }
+            }
+            a {
+              .recommend-cover {
+                width: 100%;
+                height: 100%;
+                opacity: 0.4;
+                transition: all 0.6s;
+                object-fit: cover;
+              }
+              .recommend-info {
+                line-height: 2;
+                color: #fff;
+                position: absolute;
+                top: 50%;
+                padding: 0 20px;
+                width: 100%;
+                transform: translate(0, -50%);
+                text-align: center;
+                font-size: 14px;
+                .recommend-date {
+                  font-size: 90%;
+                }
+              }
+            }
+          }
+        }
+      }
+      hr {
+        position: relative;
+        margin: 30px auto;
+        border: 2px dashed #d2ebfd;
+        width: calc(100% - 4px);
       }
     }
   }

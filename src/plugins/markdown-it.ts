@@ -16,7 +16,7 @@ const md = require('markdown-it')({
   // 或 '' 如果源字符串未更改，则应在外部进行转义。
   // 如果结果以 <pre ... 开头，内部包装器则会跳过。
   highlight: function (str: any, lang: any) {
-    console.log("str: ", str, "lang: ", lang);
+    //console.log("str: ", str, "lang: ", lang);
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(lang, str).value;
