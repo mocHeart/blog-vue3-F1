@@ -38,27 +38,27 @@ found 0 vulnerabilities
   1）`--save` 等同于 `-S`（默认，保存在package.json文件中），安装包信息将加入到*dependencies*（生产阶段的依赖，也就是项目运行时的依赖，就是程序上线后仍然需要的依赖）；
   2）`--save-dev` 等同于 `-D`，安装包信息将加入到*devDependencies*（开发阶段的依赖，就是我们在开发过程中需要的依赖，只在开发阶段起作用）。
 
-|        依赖名称        | 安装命令                               |
-| :--------------------: | -------------------------------------- |
-|        SCSS样式        | pnpm i sass                            |
-|        路由组件        | pnpm i vue-router                      |
-|       TS声明文件       | pnpm i --D  @types/node                |
-|        路由组件        | pnpm i vue-router                      |
-|        Vuetify        | pnpm i vuetify                         |
-|    Vuetify自动导入    | pnpm i vite-plugin-vuetify             |
-| Material Design 图标库 | pnpm add @mdi/font -D                  |
-|         aixos         | pnpm i axios                           |
-|      Element Plus      | pnpm install element-plus              |
-|         pinia         | pnpm i pinia                           |
-|    快捷设置组件名称    | pnpm i vite-plugin-vue-setup-extend -D |
-|     animate 动画库     | pnpm install animate.css               |
-|     打字机效果插件     | pnpm install easy-typer-js             |
-|       日期工具类       | pnpm install dayjs                     |
-|      无限加载插件      | pnpm install v3-infinite-loading       |
-|     Markdown解析器     | pnpm install markdown-it               |
-|    vite require支持    | pnpm i vite-plugin-require             |
-|      代码语法高亮      | pnpm install highlight.js              |
-|                        |                                        |
+|        依赖名称        | 安装命令                               | 官网                                              |
+| :--------------------: | -------------------------------------- | ------------------------------------------------- |
+|        SCSS样式        | pnpm i sass                            |                                                   |
+|        路由组件        | pnpm i vue-router                      |                                                   |
+|       TS声明文件       | pnpm i --D  @types/node                |                                                   |
+|        路由组件        | pnpm i vue-router                      |                                                   |
+|        Vuetify        | pnpm i vuetify                         |                                                   |
+|    Vuetify自动导入    | pnpm i vite-plugin-vuetify             |                                                   |
+| Material Design 图标库 | pnpm add @mdi/font -D                  |                                                   |
+|         aixos         | pnpm i axios                           |                                                   |
+|      Element Plus      | pnpm install element-plus              |                                                   |
+|         pinia         | pnpm i pinia                           |                                                   |
+|    快捷设置组件名称    | pnpm i vite-plugin-vue-setup-extend -D |                                                   |
+|     animate 动画库     | pnpm install animate.css               |                                                   |
+|     打字机效果插件     | pnpm install easy-typer-js             |                                                   |
+|       日期工具类       | pnpm install dayjs                     |                                                   |
+|      无限加载插件      | pnpm install v3-infinite-loading       |                                                   |
+|     Markdown解析器     | pnpm install markdown-it               |                                                   |
+|    vite require支持    | pnpm i vite-plugin-require             |                                                   |
+|      代码语法高亮      | pnpm install highlight.js              |                                                   |
+|      目录 Tocbot      | pnpm install tocbot                    | https://gitcode.com/gh_mirrors/to/tocbot/overview |
 
 ### 1.3 配置vite.config
 

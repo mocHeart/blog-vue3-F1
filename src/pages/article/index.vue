@@ -193,9 +193,9 @@
               </div>
             </div>
           </div>
-
           <!-- 分割线 -->
           <hr />
+          <!-- 评论，待完成 -->
         </v-card>
       </v-col>
       <!-- 侧边功能 -->
@@ -205,7 +205,16 @@
         class="d-md-block d-none"
         style="border: 2px solid blue"
       >
-        2222
+        <div style="position: sticky; top: 20px">
+          <!-- 文章目录 -->
+          <v-card class="right-container">
+            <div class="right-title">
+              <v-icon icon="mdi-format-list-bulleted-square" size="20" />
+              <span style="margin-left: 10px">目录</span>
+            </div>
+            <div id="toc" />
+          </v-card>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -215,11 +224,12 @@
 import useHomeStore from "@/store/modules/home";
 import { reqArticleDetail } from "@/api/article";
 import { ArticleInfo, ArticleResp, TagDTO } from "@/api/article/type";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { getConvertDate } from "@/utils/timeUtil";
 import { md } from "@/plugins/markdown-it";
 import "@/style/markdown.scss";
+import tocbot from "tocbot";
 
 const route = useRoute();
 let homeStore = useHomeStore();
@@ -244,6 +254,9 @@ let recommendArticleList = ref([] as ArticleInfo[]);
 onMounted(() => {
   articleId = parseInt(route.params?.articleId as string);
   getArticle();
+});
+onUnmounted(() => {
+  tocbot.destroy();
 });
 
 const getArticle = async () => {
@@ -291,6 +304,27 @@ let isLike = computed(() => {
 let cLick = () => {
   like.value = !like.value;
 };
+
+tocbot.init({
+  tocSelector: "#toc", // 要把目录添加元素位置，支持选择器
+  contentSelector: ".article-content", // 获取html的元素
+  headingSelector: "h1, h2, h3", // 要显示的id的目录
+  hasInnerContainers: true,
+  onClick: function (e) {
+    e.preventDefault();
+  },
+});
+// // 添加文章生成目录功能
+// let nodes = this.$refs.article.children;
+// if (nodes.length) {
+//   for (let i = 0; i < nodes.length; i++) {
+//     let node = nodes[i];
+//     let reg = /^H[1-4]{1}$/;
+//     if (reg.exec(node.tagName)) {
+//       node.id = i;
+//     }
+//   }
+// }
 </script>
 
 <style scoped lang="scss">
@@ -615,6 +649,21 @@ let cLick = () => {
         margin: 30px auto;
         border: 2px dashed #d2ebfd;
         width: calc(100% - 4px);
+      }
+    }
+
+    .right-container {
+      padding: 20px 24px;
+      font-size: 14px;
+      .right-title {
+        display: flex;
+        align-items: center;
+        line-height: 2;
+        font-size: 16.8px;
+        margin-bottom: 6px;
+        i {
+          font-weight: bold;
+        }
       }
     }
   }
