@@ -27,3 +27,26 @@ h1 {
   text-decoration: none;
 }
 
+.toc-list {
+  padding: 0;
+  .toc-list-item{
+    line-height: 2;
+    list-style: none;
+    .toc-link {
+      display: block;
+      border-left: 3px solid transparent;
+      padding-left: 6px;
+      color: #666261 !important;
+      transition: all .2s ease-in-out;
+    }
+    .is-active-link{
+      border-left-color: #009d92;
+      background: #00c4b6;
+      color: #fff !important;
+      &::before {
+        background-color: white;
+      }
+    }
+  }
+}
+

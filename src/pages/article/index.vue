@@ -117,7 +117,7 @@
             </a>
             <a
               class="reward-btn"
-              v-if="homeStore.indexInfo.websiteConfig.isReward == 0"
+              v-if="homeStore.indexInfo.websiteConfig?.isReward == 0"
             >
               <!-- 打赏按钮 -->
               <v-icon icon="mdi-qrcode" size="small" color="#fff" /> 打赏
@@ -224,7 +224,15 @@
 import useHomeStore from "@/store/modules/home";
 import { reqArticleDetail } from "@/api/article";
 import { ArticleInfo, ArticleResp, TagDTO } from "@/api/article/type";
-import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
+import {
+  computed,
+  onBeforeUpdate,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  reactive,
+  ref,
+} from "vue";
 import { useRoute } from "vue-router";
 import { getConvertDate } from "@/utils/timeUtil";
 import { md } from "@/plugins/markdown-it";
@@ -234,6 +242,7 @@ import tocbot from "tocbot";
 const route = useRoute();
 let homeStore = useHomeStore();
 
+let article = ref();
 let articleId = 0;
 let articleCover = ref("");
 let articleTitle = ref("");
@@ -257,6 +266,39 @@ onMounted(() => {
 });
 onUnmounted(() => {
   tocbot.destroy();
+});
+onBeforeUpdate(() => {
+  tocbot.init({
+    // 要把目录添加元素位置，支持选择器
+    tocSelector: "#toc",
+    // 提取标题构建目录的地方。
+    contentSelector: ".article-content",
+    // 内容选择器元素内部要抓取哪些级别的标题
+    headingSelector: "h1, h2, h3",
+    // 处理内容区域内的相对或绝对定位容器内的标题。
+    hasInnerContainers: true,
+    // 平滑滚动是否开启。
+    scrollSmooth: true,
+    // 当点击目录中的链接时执行的函数，参数包括事件对象
+    onClick: function (e) {
+      e.preventDefault();
+    },
+  });
+});
+onUpdated(() => {
+  // 添加文章生成目录功能
+  let nodes = article.value.children;
+  if (nodes.length) {
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      let reg = /^H[1-4]{1}$/;
+      if (reg.exec(node.tagName)) {
+        node.id = i;
+      }
+    }
+  }
+  // 刷新文章目录
+  tocbot.refresh();
 });
 
 const getArticle = async () => {
@@ -304,27 +346,6 @@ let isLike = computed(() => {
 let cLick = () => {
   like.value = !like.value;
 };
-
-tocbot.init({
-  tocSelector: "#toc", // 要把目录添加元素位置，支持选择器
-  contentSelector: ".article-content", // 获取html的元素
-  headingSelector: "h1, h2, h3", // 要显示的id的目录
-  hasInnerContainers: true,
-  onClick: function (e) {
-    e.preventDefault();
-  },
-});
-// // 添加文章生成目录功能
-// let nodes = this.$refs.article.children;
-// if (nodes.length) {
-//   for (let i = 0; i < nodes.length; i++) {
-//     let node = nodes[i];
-//     let reg = /^H[1-4]{1}$/;
-//     if (reg.exec(node.tagName)) {
-//       node.id = i;
-//     }
-//   }
-// }
 </script>
 
 <style scoped lang="scss">
