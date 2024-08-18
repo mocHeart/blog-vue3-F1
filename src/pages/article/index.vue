@@ -63,7 +63,7 @@
       </div>
     </div>
     <!-- 内容 -->
-    <v-row class="article-container" style="border: 2px solid darkcyan">
+    <v-row class="article-container">
       <!-- 左边文章主体 -->
       <v-col md="9" cols="12">
         <v-card class="article-wrapper" elevation="10" rounded-lg>
@@ -199,12 +199,7 @@
         </v-card>
       </v-col>
       <!-- 侧边功能 -->
-      <v-col
-        md="3"
-        cols="12"
-        class="d-md-block d-none"
-        style="border: 2px solid blue"
-      >
+      <v-col md="3" cols="12" class="d-md-block d-none">
         <div style="position: sticky; top: 20px">
           <!-- 文章目录 -->
           <v-card class="right-container">
@@ -213,6 +208,34 @@
               <span style="margin-left: 10px">目录</span>
             </div>
             <div id="toc" />
+          </v-card>
+          <!-- 最新文章 -->
+          <v-card class="right-container" style="margin-top: 20px">
+            <div class="right-title">
+              <v-icon icon="mdi-update" size="20" />
+              <span style="margin-left: 10px">最新文章</span>
+            </div>
+            <div class="article-list">
+              <div
+                class="article-item"
+                v-for="item of newestArticleList"
+                :key="item.id"
+              >
+                <router-link :to="'/articles/' + item.id" class="content-cover">
+                  <img :src="item.articleCover" />
+                </router-link>
+                <div class="content">
+                  <div class="content-title">
+                    <router-link :to="'/articles/' + item.id">
+                      {{ item.articleTitle }}
+                    </router-link>
+                  </div>
+                  <div class="content-time">
+                    {{ getConvertDate(item.createTime as string) }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </v-card>
         </div>
       </v-col>
@@ -260,6 +283,7 @@ let tagDTOList = ref([] as TagDTO[]);
 let lastArticle = reactive({} as ArticleInfo);
 let nextArticle = reactive({} as ArticleInfo);
 let recommendArticleList = ref([] as ArticleInfo[]);
+let newestArticleList = ref([] as ArticleInfo[]);
 onMounted(() => {
   articleId = parseInt(route.params?.articleId as string);
   getArticle();
@@ -286,7 +310,7 @@ onBeforeUpdate(() => {
   });
 });
 onUpdated(() => {
-  // 添加文章生成目录功能
+  // 添加文章目录跳转锚点
   let nodes = article.value.children;
   if (nodes.length) {
     for (let i = 0; i < nodes.length; i++) {
@@ -319,8 +343,11 @@ const getArticle = async () => {
   });
   lastArticle = result.data.lastArticle;
   nextArticle = result.data.nextArticle;
-  result.data.recommendArticleList.forEach((it: ArticleInfo) => {
+  result.data.recommendArticleList.forEach((it) => {
     recommendArticleList.value.push(it);
+  });
+  result.data.newestArticleList.forEach((it) => {
+    newestArticleList.value.push(it);
   });
 };
 
@@ -684,6 +711,59 @@ let cLick = () => {
         margin-bottom: 6px;
         i {
           font-weight: bold;
+        }
+      }
+      .article-list {
+        .article-item {
+          display: flex;
+          align-items: center;
+          padding: 6px 0;
+          &:first-child {
+            padding-top: 0;
+          }
+          &:last-child {
+            padding-bottom: 0;
+          }
+          &:not(:last-child) {
+            border-bottom: 1px dashed #f5f5f5;
+          }
+          .content-cover {
+            width: 58.8px;
+            height: 58.8px;
+            border-radius: 5px;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              transition: all 0.6s;
+              object-fit: cover;
+              &:hover {
+                transform: scale(1.1);
+              }
+            }
+          }
+          .content {
+            flex: 1;
+            padding-left: 10px;
+            word-break: break-all;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            .content-title {
+              a {
+                transition: all 0.2s;
+                font-size: 95%;
+                &:hover {
+                  color: #2ba1d1;
+                }
+              }
+            }
+            .content-time {
+              color: #858585;
+              font-size: 85%;
+              line-height: 2;
+            }
+          }
         }
       }
     }
