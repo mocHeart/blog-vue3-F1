@@ -13,16 +13,29 @@ export default createRouter({
     {
       path: "/home",
       component: () => import("@/pages/home/index.vue"),
+      meta: {
+        title: "首页",
+      },
     },
     {
       path: "/articles/:articleId",
       component: () => import("@/pages/article/index.vue"),
+      meta: {
+        title: "文章详情",
+      },
     },
     {
       path: "/archives",
       component: () => import("@/pages/archive/index.vue"),
       meta: {
         title: "归档",
+      },
+    },
+    {
+      path: "/tags",
+      component: () => import("@/pages/tag/index.vue"),
+      meta: {
+        title: "标签"
       },
     },
     {

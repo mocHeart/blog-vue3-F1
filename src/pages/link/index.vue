@@ -54,7 +54,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Link">
 import useHomeStore from "@/store/modules/home";
 import { computed, onMounted, ref } from "vue";
 import { reqLinksData } from "@/api/link";
