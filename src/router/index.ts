@@ -32,6 +32,13 @@ export default createRouter({
       },
     },
     {
+      path: "/categories",
+      component: () => import("@/pages/category/index.vue"),
+      meta: {
+        title: "分类"
+      }
+    },
+    {
       path: "/tags",
       component: () => import("@/pages/tag/index.vue"),
       meta: {
